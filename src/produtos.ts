@@ -55,23 +55,26 @@ export function removerProduto(id: number): string {
 }
 
 export function atualizarProduto(id: number, dados: Partial<Produto>): string {
+
+    // Fase 1: valida todos os campos antes de alterar qualquer coisa
     const produto = buscarProdutoPorId(id);
     if (produto === undefined) {
         return `Erro: produto com id ${id} não encontrado`;
     }
     if (dados.preco !== undefined && dados.preco <= 0) {
-            return "Erro: o preço do produto não pode ser 0 ou negativo";
+        return "Erro: o preço do produto não pode ser 0 ou negativo";
     }
     if (dados.nome !== undefined && dados.nome.trim() === "") {
-            return "Erro: o nome do produto não pode ficar vazio";
+        return "Erro: o nome do produto não pode ficar vazio";
     }
     if (dados.categoria !== undefined && dados.categoria.trim() === "") {
-            return "Erro: o nome da categoria não pode ficar vazio";
+        return "Erro: o nome da categoria não pode ficar vazio";
     }
     if (dados.estoque !== undefined && dados.estoque < 0) {
-            return "Erro: o valor do estoque não pode ser negativo";
+        return "Erro: o valor do estoque não pode ser negativo";
     }
 
+    // fase 2: aplica as alterações (so chega aqui se tudo for válido)
     if (dados.preco !== undefined) produto.preco = dados.preco;
     if (dados.nome !== undefined) produto.nome = dados.nome;
     if (dados.categoria !== undefined) produto.categoria = dados.categoria;

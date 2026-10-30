@@ -1,3 +1,4 @@
+import { buscarClientePorId, cadastrarCliente, listarClientes } from "./clientes";
 import {
     produtos,
     listarProdutos,
@@ -66,3 +67,13 @@ console.log(buscarProdutoPorId(3));
 console.log("\n--- Atualização parcialmente inválida ---");
 console.log(atualizarProduto(4, { preco: 999, nome: "" }));
 console.log(buscarProdutoPorId(4));
+
+console.table(listarClientes())
+console.log(buscarClientePorId(3))
+console.log(buscarClientePorId(99))
+
+console.log(cadastrarCliente({ id: 4, nome: "Deivin", email: "deivin@gmail.com" }))
+console.log(cadastrarCliente({ id: 5, nome: "", email: "testevazio@gmail.com" }))
+console.log(cadastrarCliente({ id: 1, nome: "Dev", email: "" }))
+console.log(cadastrarCliente({ id: 1, nome: "Alho", email: "alho29@gmail.com" }))
+console.log(cadastrarCliente({ id: 7, nome: "Atchim", email: "ANA1313@GMAIL.COM" }))
