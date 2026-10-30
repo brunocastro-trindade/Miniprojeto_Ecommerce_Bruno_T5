@@ -27,3 +27,20 @@ export function filtrarPorCategoria(categoria: string): Produto[] {
     const categoriaLimpa = categoria.trim().toLowerCase();
     return produtos.filter((p) => p.categoria.toLowerCase() === categoriaLimpa);
 }
+
+export function cadastrarProduto(novo: Produto): string {
+    if (novo.nome.trim() === "") {
+        return "Erro: o nome do produto não pode estar vazio";
+    }
+    if (novo.preco <= 0) {
+        return "Erro: o preço do produto não pode ser 0 ou negativo";
+    }
+    if (novo.estoque < 0) {
+        return "Erro: o estoque do produto não pode estar negativo";
+    }
+    if (buscarProdutoPorId(novo.id) !== undefined) {
+        return `"Erro: já existe um produto com o id ${novo.id}"`;
+    }
+    produtos.push(novo);
+    return `Produto "${novo.nome}" cadastrado com sucesso.`;
+}
