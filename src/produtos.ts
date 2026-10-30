@@ -9,3 +9,21 @@ export const produtos: Produto[] = [
     { id: 6, nome: "projetor", categoria: "informatica", preco: 350, estoque: 15 },
     { id: 7, nome: "caneta", categoria: "papelaria", preco: 2, estoque: 100},
 ];
+
+export function listarProdutos(): Produto[] {
+    return produtos;
+}
+
+export function buscarProdutoPorId(id: number): Produto | undefined {
+    return produtos.find((p) => p.id === id);
+}
+
+export function buscarProdutosPorNome(termo: string): Produto[] {
+    const termoLimpo = termo.trim().toLowerCase();
+    return produtos.filter((p) => p.nome.toLowerCase().includes(termoLimpo));
+}
+
+export function filtrarPorCategoria(categoria: string): Produto[] {
+    const categoriaLimpa = categoria.trim().toLowerCase();
+    return produtos.filter((p) => p.categoria.toLowerCase() === categoriaLimpa);
+}

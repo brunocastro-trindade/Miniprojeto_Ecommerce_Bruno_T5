@@ -1,6 +1,20 @@
-import { produtos } from "./produtos";
-import { clientes } from "./clientes";
+import {
+    produtos,
+    listarProdutos,
+    buscarProdutoPorId,
+    buscarProdutosPorNome,
+    filtrarPorCategoria,
+} from "./produtos";
 
 console.log("=== Sistema de Gerenciamento de E-commerce ===");
-console.log(`Produtos cadastrados: ${produtos.length}`);
-console.log(`Clientes cadastrados: ${clientes.length}`);
+console.log("\n--- Lista de produtos ---");
+console.table(listarProdutos());
+
+console.log("\n--- Busca por id 3 ---");
+console.log(buscarProdutoPorId(3));
+
+console.log("\n--- Busca por nome de produto ---");
+console.log(buscarProdutosPorNome("geladeira"));
+
+console.log("\n--- Busca por categoria ---");
+console.log(filtrarPorCategoria("PAPELARIA"))
