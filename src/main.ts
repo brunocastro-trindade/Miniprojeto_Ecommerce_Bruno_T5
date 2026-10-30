@@ -1,3 +1,4 @@
+import { adicionarAoCarrinho, listarCarrinho } from "./carrinho";
 import { buscarClientePorId, cadastrarCliente, listarClientes } from "./clientes";
 import {
     produtos,
@@ -68,12 +69,32 @@ console.log("\n--- Atualização parcialmente inválida ---");
 console.log(atualizarProduto(4, { preco: 999, nome: "" }));
 console.log(buscarProdutoPorId(4));
 
-console.table(listarClientes())
-console.log(buscarClientePorId(3))
-console.log(buscarClientePorId(99))
+console.table(listarClientes());
+console.log(buscarClientePorId(3));
+console.log(buscarClientePorId(99));
 
-console.log(cadastrarCliente({ id: 4, nome: "Deivin", email: "deivin@gmail.com" }))
-console.log(cadastrarCliente({ id: 5, nome: "", email: "testevazio@gmail.com" }))
-console.log(cadastrarCliente({ id: 1, nome: "Dev", email: "" }))
-console.log(cadastrarCliente({ id: 1, nome: "Alho", email: "alho29@gmail.com" }))
-console.log(cadastrarCliente({ id: 7, nome: "Atchim", email: "ANA1313@GMAIL.COM" }))
+console.log(cadastrarCliente({ id: 4, nome: "Deivin", email: "deivin@gmail.com" }));
+console.log(cadastrarCliente({ id: 5, nome: "", email: "testevazio@gmail.com" }));
+console.log(cadastrarCliente({ id: 6, nome: "Dev", email: "" }));
+console.log(cadastrarCliente({ id: 1, nome: "Alho", email: "alho29@gmail.com" }));
+console.log(cadastrarCliente({ id: 7, nome: "Atchim", email: "ANA1313@GMAIL.COM" }));
+
+console.log("\n=== CARRINHO DE COMPRAS ===");
+
+console.log("\n--- Adição válida ---");
+console.log(adicionarAoCarrinho(3, 2));
+console.log(adicionarAoCarrinho(4, 5));
+console.table(listarCarrinho());
+
+console.log("\n--- Adição inválida: quantidade zero ou negativa ---");
+console.log(adicionarAoCarrinho(3, 0));
+console.log(adicionarAoCarrinho(3, -1));
+
+console.log("\n--- Adição inválida: produto inexistente ---");
+console.log(adicionarAoCarrinho(99, 1));
+
+console.log("\n--- Adição inválida: quantidade acima do estoque ---");
+console.log(adicionarAoCarrinho(3, 1000));
+
+console.log("\n--- Carrinho final (os inválidos não devem aparecer) ---");
+console.table(listarCarrinho());
