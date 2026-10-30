@@ -62,3 +62,7 @@ console.log(atualizarProduto(3, { estoque: 40 }));
 console.log(atualizarProduto(3, { nome: "monitor 24 polegadas", estoque: 40 }));
 console.log(atualizarProduto(3, { nome: "   " }));
 console.log(buscarProdutoPorId(3));
+
+console.log("\n--- Atualização parcialmente inválida ---");
+console.log(atualizarProduto(4, { preco: 999, nome: "" }));
+console.log(buscarProdutoPorId(4));

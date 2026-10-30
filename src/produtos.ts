@@ -7,7 +7,7 @@ export const produtos: Produto[] = [
     { id: 4, nome: "caderno", categoria: "papelaria", preco: 20, estoque: 100 },
     { id: 5, nome: "agenda", categoria: "papelaria", preco: 30, estoque: 50 },
     { id: 6, nome: "projetor", categoria: "informatica", preco: 350, estoque: 15 },
-    { id: 7, nome: "caneta", categoria: "papelaria", preco: 2, estoque: 100},
+    { id: 7, nome: "caneta", categoria: "papelaria", preco: 2, estoque: 100 },
 ];
 
 export function listarProdutos(): Produto[] {
@@ -59,29 +59,22 @@ export function atualizarProduto(id: number, dados: Partial<Produto>): string {
     if (produto === undefined) {
         return `Erro: produto com id ${id} não encontrado`;
     }
-    if (dados.preco !== undefined) {
-        if (dados.preco <= 0) {
+    if (dados.preco !== undefined && dados.preco <= 0) {
             return "Erro: o preço do produto não pode ser 0 ou negativo";
-        }
-        produto.preco = dados.preco;
     }
-        if (dados.nome !== undefined) {
-        if (dados.nome.trim() === "") {
+    if (dados.nome !== undefined && dados.nome.trim() === "") {
             return "Erro: o nome do produto não pode ficar vazio";
-        }
-        produto.nome = dados.nome;
     }
-        if (dados.categoria !== undefined) {
-        if (dados.categoria.trim() === "") {
+    if (dados.categoria !== undefined && dados.categoria.trim() === "") {
             return "Erro: o nome da categoria não pode ficar vazio";
-        }
-        produto.categoria = dados.categoria;
     }
-        if (dados.estoque !== undefined) {
-        if (dados.estoque < 0) {
+    if (dados.estoque !== undefined && dados.estoque < 0) {
             return "Erro: o valor do estoque não pode ser negativo";
-        }
-        produto.estoque = dados.estoque;
     }
-        return `Produto "${produto.nome}" atualizado com sucesso`;
+
+    if (dados.preco !== undefined) produto.preco = dados.preco;
+    if (dados.nome !== undefined) produto.nome = dados.nome;
+    if (dados.categoria !== undefined) produto.categoria = dados.categoria;
+    if (dados.estoque !== undefined) produto.estoque = dados.estoque;
+    return `Produto "${produto.nome}" atualizado com sucesso`;
 }
