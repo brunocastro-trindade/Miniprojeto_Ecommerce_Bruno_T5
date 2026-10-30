@@ -29,13 +29,13 @@ console.log("\n--- Cadastro inválido: nome vazio ---");
 console.log(cadastrarProduto({ id: 8, nome: "", categoria: "papelaria", preco: 120, estoque: 10 }));
 console.log(`Total de produtos: ${listarProdutos().length}`);
 
-console.log("\n--- Cadastro inválido: preço maior que 0 ---");
+console.log("\n--- Cadastro inválido: preço zero ou negativo ---");
 console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 0, estoque: 10 }));
 console.log(cadastrarProduto({ id: 8, nome: "vermelho", categoria: "papelaria", preco: -10, estoque: 10 }));
 
 console.log("\n--- Cadastro inválido: estoque menor que 0 ---");
 console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 1, estoque: -10 }));
-console.log(cadastrarProduto({ id: 8, nome: "vermelho", categoria: "papelaria", preco: 2, estoque: 0 }));
+console.log(cadastrarProduto({ id: 9, nome: "vermelho", categoria: "papelaria", preco: 2, estoque: 0 }));
 
 console.log("\n--- Cadastro inválido: id já existente ---");
 console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 1, estoque: 10 }));

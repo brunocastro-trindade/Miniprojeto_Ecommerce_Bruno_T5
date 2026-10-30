@@ -39,7 +39,7 @@ export function cadastrarProduto(novo: Produto): string {
         return "Erro: o estoque do produto não pode estar negativo";
     }
     if (buscarProdutoPorId(novo.id) !== undefined) {
-        return `"Erro: já existe um produto com o id ${novo.id}"`;
+        return `Erro: já existe um produto com o id ${novo.id}`;
     }
     produtos.push(novo);
     return `Produto "${novo.nome}" cadastrado com sucesso.`;
