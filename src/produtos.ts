@@ -47,7 +47,7 @@ export function cadastrarProduto(novo: Produto): string {
 
 export function removerProduto(id: number): string {
     const indice = produtos.findIndex((p) => p.id === id);
-    if (indice -1) {
+    if (indice === -1) {
         return `Erro: o produto que será removido não foi encontrado`
     }
     produtos.splice(indice, 1);
