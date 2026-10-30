@@ -53,3 +53,35 @@ export function removerProduto(id: number): string {
     produtos.splice(indice, 1);
     return `Produto com id ${id} removido com sucesso`;
 }
+
+export function atualizarProduto(id: number, dados: Partial<Produto>): string {
+    const produto = buscarProdutoPorId(id);
+    if (produto === undefined) {
+        return `Erro: produto com id ${id} não encontrado`;
+    }
+    if (dados.preco !== undefined) {
+        if (dados.preco <= 0) {
+            return "Erro: o preço do produto não pode ser 0 ou negativo";
+        }
+        produto.preco = dados.preco;
+    }
+        if (dados.nome !== undefined) {
+        if (dados.nome.trim() === "") {
+            return "Erro: o nome do produto não pode ficar vazio";
+        }
+        produto.nome = dados.nome;
+    }
+        if (dados.categoria !== undefined) {
+        if (dados.categoria.trim() === "") {
+            return "Erro: o nome da categoria não pode ficar vazio";
+        }
+        produto.categoria = dados.categoria;
+    }
+        if (dados.estoque !== undefined) {
+        if (dados.estoque < 0) {
+            return "Erro: o valor do estoque não pode ser negativo";
+        }
+        produto.estoque = dados.estoque;
+    }
+        return `Produto "${produto.nome}" atualizado com sucesso`;
+}

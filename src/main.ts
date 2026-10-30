@@ -6,6 +6,7 @@ import {
     filtrarPorCategoria,
     cadastrarProduto,
     removerProduto,
+    atualizarProduto,
 } from "./produtos";
 
 console.log("=== Sistema de Gerenciamento de E-commerce ===");
@@ -47,3 +48,17 @@ console.log(`Total de produtos: ${listarProdutos().length}`);
 
 console.log(removerProduto(99));
 console.log(`Total de produtos: ${listarProdutos().length}`);
+
+console.log(removerProduto(1));
+console.log(`Total de produtos: ${listarProdutos().length}`);
+
+console.log("\n--- Atualização de produto ---");
+console.log(atualizarProduto(3, { preco: 250 }));
+console.log(atualizarProduto(99, { preco: 250 }));
+
+console.log(atualizarProduto(3, { preco: 250 }));
+console.log(atualizarProduto(3, { preco: -5 }));
+console.log(atualizarProduto(3, { estoque: 40 }));
+console.log(atualizarProduto(3, { nome: "monitor 24 polegadas", estoque: 40 }));
+console.log(atualizarProduto(3, { nome: "   " }));
+console.log(buscarProdutoPorId(3));
