@@ -44,3 +44,12 @@ export function cadastrarProduto(novo: Produto): string {
     produtos.push(novo);
     return `Produto "${novo.nome}" cadastrado com sucesso.`;
 }
+
+export function removerProduto(id: number): string {
+    const indice = produtos.findIndex((p) => p.id === id);
+    if (indice -1) {
+        return `Erro: o produto que será removido não foi encontrado`
+    }
+    produtos.splice(indice, 1);
+    return `Produto com id ${id} removido com sucesso`;
+}

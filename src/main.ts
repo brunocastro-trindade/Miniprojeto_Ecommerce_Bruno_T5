@@ -5,6 +5,7 @@ import {
     buscarProdutosPorNome,
     filtrarPorCategoria,
     cadastrarProduto,
+    removerProduto,
 } from "./produtos";
 
 console.log("=== Sistema de Gerenciamento de E-commerce ===");
@@ -39,3 +40,10 @@ console.log(cadastrarProduto({ id: 9, nome: "vermelho", categoria: "papelaria", 
 
 console.log("\n--- Cadastro inválido: id já existente ---");
 console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 1, estoque: 10 }));
+
+console.log("\n--- Remoção de produto ---");
+console.log(removerProduto(2));
+console.log(`Total de produtos: ${listarProdutos().length}`);
+
+console.log(removerProduto(99));
+console.log(`Total de produtos: ${listarProdutos().length}`);
