@@ -1,5 +1,5 @@
 import { ItemCarrinho } from "./types";
-import { buscarProdutoPorId } from "./produtos";
+import { buscarProdutoPorId, produtos } from "./produtos";
 
 export const carrinho: ItemCarrinho[] = [];
 
@@ -29,4 +29,32 @@ export function adicionarAoCarrinho(produtoId: number, quantidade: number): stri
     
     carrinho.push({ produtoId: produtoId, quantidade: quantidade });
     return `Adicionado ao carrinho: ${quantidade} unidade(s) do produto ${produtoId}`;
+}
+
+export function removerDoCarrinho(produtoId: number): string {
+    const indice = carrinho.findIndex((item) => item.produtoId === produtoId);
+    if (indice === -1) {
+        return `Erro: o produto não está no carrinho`
+    }
+    carrinho.splice(indice, 1);
+    return `Produto com id ${produtoId} removido com sucesso`;
+}
+
+export function alterarQuantidade(produtoId: number, novaQuantidade: number): string {
+    if (novaQuantidade <= 0){
+        return "Erro: a quantidade deve ser maior que zero"
+    }
+    const item = carrinho.find((i) => i.produtoId === produtoId);
+    if (item === undefined) {
+        return `Erro: o produto ${produtoId} não está no carrinho`;
+    }
+    const produto = buscarProdutoPorId(produtoId);
+    if (produto === undefined) {
+        return `Erro: o produto ${produtoId} não existe no catalogo`;
+    }
+    if (novaQuantidade > produto.estoque) {
+        return `Erro: insuficiente. Disponivel: ${produto.estoque}`;
+    }
+    item.quantidade = novaQuantidade;
+    return `Quantidade do produto ${produtoId} alterada para ${item.quantidade}`;
 }

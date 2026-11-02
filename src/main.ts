@@ -1,4 +1,4 @@
-import { adicionarAoCarrinho, listarCarrinho } from "./carrinho";
+import { adicionarAoCarrinho, listarCarrinho, removerDoCarrinho, alterarQuantidade } from "./carrinho";
 import { buscarClientePorId, cadastrarCliente, listarClientes } from "./clientes";
 import {
     produtos,
@@ -107,3 +107,14 @@ console.log("\n--- Somando acima do estoque ---");
 console.log(adicionarAoCarrinho(3, 38));
 console.table(listarCarrinho());
 
+console.log("\n--- Remover do carrinho ---");
+console.log(removerDoCarrinho(4));
+console.log(removerDoCarrinho(99));
+console.table(listarCarrinho());
+
+console.log("\n--- Alterar quantidade ---");
+console.log(alterarQuantidade(3, 5));
+console.log(alterarQuantidade(3, 0));
+console.log(alterarQuantidade(99, 2));
+console.log(alterarQuantidade(3, 1000));
+console.table(listarCarrinho());
