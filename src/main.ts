@@ -86,6 +86,10 @@ console.log(adicionarAoCarrinho(3, 2));
 console.log(adicionarAoCarrinho(4, 5));
 console.table(listarCarrinho());
 
+console.log("\n--- Adicionar o mesmo produto de novo ---");
+console.log(adicionarAoCarrinho(3, 1));
+console.table(listarCarrinho());
+
 console.log("\n--- Adição inválida: quantidade zero ou negativa ---");
 console.log(adicionarAoCarrinho(3, 0));
 console.log(adicionarAoCarrinho(3, -1));
@@ -98,3 +102,8 @@ console.log(adicionarAoCarrinho(3, 1000));
 
 console.log("\n--- Carrinho final (os inválidos não devem aparecer) ---");
 console.table(listarCarrinho());
+
+console.log("\n--- Somando acima do estoque ---");
+console.log(adicionarAoCarrinho(3, 38));
+console.table(listarCarrinho());
+
