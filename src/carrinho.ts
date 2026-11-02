@@ -16,11 +16,12 @@ export function adicionarAoCarrinho(produtoId: number, quantidade: number): stri
     if (produto === undefined){
         return `Erro: o produto não existe`
     }
-    if (quantidade > produto.estoque){
-        return `Erro: Somente existe ${produto.estoque} disponiveis`
-    }
     const itemExistente = carrinho.find((item) => item.produtoId === produtoId);
+    const quantidadeNoCarrinho = itemExistente !== undefined ? itemExistente.quantidade : 0;
     
+    if (quantidadeNoCarrinho + quantidade > produto.estoque){
+        return `Erro: estoque insuficiente. Disponível: ${produto.estoque}, já no carrinho: ${quantidadeNoCarrinho}`;
+    }
     if (itemExistente !== undefined ) {
         itemExistente.quantidade += quantidade;
         return `Quantidade do produto ${produtoId} atualizada para ${itemExistente.quantidade}`;
