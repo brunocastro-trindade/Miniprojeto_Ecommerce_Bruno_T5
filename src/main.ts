@@ -1,4 +1,4 @@
-import { adicionarAoCarrinho, listarCarrinho, removerDoCarrinho, alterarQuantidade, carrinho, calcularSubtotal, calcularTotal} from "./carrinho";
+import { adicionarAoCarrinho, listarCarrinho, removerDoCarrinho, alterarQuantidade, carrinho, calcularSubtotal, calcularTotal, listarItensDetalhados} from "./carrinho";
 import { buscarClientePorId, cadastrarCliente, listarClientes } from "./clientes";
 import {
     produtos,
@@ -125,3 +125,8 @@ console.log(calcularSubtotal(carrinho[0]));
 console.log("\n--- Total do carrinho ---");
 console.log(adicionarAoCarrinho(4, 2));
 console.log(`Total: R$ ${calcularTotal()}`);
+
+console.log("\n--- Itens do carrinho com subtotal ---");
+console.log(adicionarAoCarrinho(4, 2));
+console.table(listarItensDetalhados());
+console.log(`Total do carrinho: R$ ${calcularTotal().toFixed(2)}`);

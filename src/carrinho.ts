@@ -1,4 +1,4 @@
-import { ItemCarrinho } from "./types";
+import { ItemCarrinho, ItemPedido } from "./types";
 import { buscarProdutoPorId } from "./produtos";
 
 export const carrinho: ItemCarrinho[] = [];
@@ -69,4 +69,21 @@ export function calcularSubtotal(item: ItemCarrinho): number {
 
 export function calcularTotal(): number {
     return carrinho.reduce((acumulado, item) => acumulado + calcularSubtotal(item), 0);
+}
+
+export function listarItensDetalhados(): ItemPedido[] {
+    return carrinho.map((item) => {
+        const produto = buscarProdutoPorId(item.produtoId);
+        return {
+            produtoId: item.produtoId,
+            nomeProduto: produto !== undefined ? produto.nome : "(produto removido)",
+            quantidade: item.quantidade,
+            precoUnitario: produto !== undefined ? produto.preco : 0,
+            subtotal: calcularSubtotal(item),
+        };
+    });
+}
+
+export function limparCarrinho(): void {
+    carrinho.splice(0, carrinho.length);
 }
