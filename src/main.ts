@@ -1,171 +1,103 @@
-import { adicionarAoCarrinho, listarCarrinho, removerDoCarrinho, alterarQuantidade, carrinho, calcularSubtotal, calcularTotal, listarItensDetalhados, limparCarrinho} from "./carrinho";
-import { finalizarPedido, listarPedidos, listarPedidosDoCliente } from "./pedidos";
-import { buscarClientePorId, cadastrarCliente, listarClientes } from "./clientes";
 import {
-    produtos,
-    listarProdutos,
-    buscarProdutoPorId,
-    buscarProdutosPorNome,
-    filtrarPorCategoria,
-    cadastrarProduto,
-    removerProduto,
-    atualizarProduto,
+    listarProdutos, buscarProdutoPorId, buscarProdutosPorNome, filtrarPorCategoria,
+    cadastrarProduto, atualizarProduto, removerProduto,
 } from "./produtos";
+import { listarClientes, buscarClientePorId, cadastrarCliente } from "./clientes";
+import {
+    adicionarAoCarrinho, removerDoCarrinho, alterarQuantidade,
+    listarItensDetalhados, calcularTotal, limparCarrinho, listarCarrinho,
+} from "./carrinho";
+import { finalizarPedido, listarPedidos, listarPedidosDoCliente } from "./pedidos";
+import { exibirRelatorios } from "./relatorios";
 
-console.log("=== Sistema de Gerenciamento de E-commerce ===");
-console.log("\n--- Lista de produtos ---");
+function titulo(texto: string): void {
+    console.log(`\n${"=".repeat(60)}\n${texto}\n${"=".repeat(60)}`);
+}
+
+console.log("SISTEMA DE GERENCIAMENTO DE E-COMMERCE");
+
+// ---------------------------------------------------------------
+titulo("1. PRODUTOS: CONSULTA E CADASTRO");
+console.table(listarProdutos());
+console.log("Busca por id 3:", buscarProdutoPorId(3));
+console.log("Busca por id 99:", buscarProdutoPorId(99));
+console.log('Busca por nome "MOU":', buscarProdutosPorNome("MOU"));
+console.log('Filtro por categoria "PAPELARIA":', filtrarPorCategoria("PAPELARIA"));
+
+console.log(cadastrarProduto({ id: 8, nome: "mochila", categoria: "papelaria", preco: 120, estoque: 10 }));
+console.log(atualizarProduto(3, { preco: 250, estoque: 40 }));
+console.log(removerProduto(2));
 console.table(listarProdutos());
 
-console.log("\n--- Busca por id 3 ---");
-console.log(buscarProdutoPorId(3));
-console.log(buscarProdutoPorId(99));
-
-console.log("\n--- Busca por nome de produto ---");
-console.log(buscarProdutosPorNome("geladeira"));
-
-console.log("\n--- Busca por categoria ---");
-console.log(filtrarPorCategoria("PAPELARIA"))
-
-console.log("\n--- Cadastro de produto ---");
-console.log(cadastrarProduto({ id: 8, nome: "mochila", categoria: "papelaria", preco: 120, estoque: 10 }));
-console.log(`Total de produtos: ${listarProdutos().length}`);
-
-console.log("\n--- Cadastro inválido: nome vazio ---");
-console.log(cadastrarProduto({ id: 8, nome: "", categoria: "papelaria", preco: 120, estoque: 10 }));
-console.log(`Total de produtos: ${listarProdutos().length}`);
-
-console.log("\n--- Cadastro inválido: preço zero ou negativo ---");
-console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 0, estoque: 10 }));
-console.log(cadastrarProduto({ id: 8, nome: "vermelho", categoria: "papelaria", preco: -10, estoque: 10 }));
-
-console.log("\n--- Cadastro inválido: estoque menor que 0 ---");
-console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 1, estoque: -10 }));
-console.log(cadastrarProduto({ id: 9, nome: "vermelho", categoria: "papelaria", preco: 2, estoque: 0 }));
-
-console.log("\n--- Cadastro inválido: id já existente ---");
-console.log(cadastrarProduto({ id: 8, nome: "azul", categoria: "papelaria", preco: 1, estoque: 10 }));
-
-console.log("\n--- Remoção de produto ---");
-console.log(removerProduto(2));
-console.log(`Total de produtos: ${listarProdutos().length}`);
-
+titulo("2. PRODUTOS: SITUAÇÕES INVÁLIDAS");
+console.log(cadastrarProduto({ id: 9, nome: "régua", categoria: "papelaria", preco: -5, estoque: 10 }));
+console.log(cadastrarProduto({ id: 9, nome: "   ", categoria: "papelaria", preco: 5, estoque: 10 }));
+console.log(cadastrarProduto({ id: 9, nome: "régua", categoria: "papelaria", preco: 5, estoque: -1 }));
+console.log(cadastrarProduto({ id: 1, nome: "régua", categoria: "papelaria", preco: 5, estoque: 10 }));
 console.log(removerProduto(99));
-console.log(`Total de produtos: ${listarProdutos().length}`);
-
-console.log(removerProduto(1));
-console.log(`Total de produtos: ${listarProdutos().length}`);
-
-console.log("\n--- Atualização de produto ---");
-console.log(atualizarProduto(3, { preco: 250 }));
-console.log(atualizarProduto(99, { preco: 250 }));
-
-console.log(atualizarProduto(3, { preco: 250 }));
-console.log(atualizarProduto(3, { preco: -5 }));
-console.log(atualizarProduto(3, { estoque: 40 }));
-console.log(atualizarProduto(3, { nome: "monitor 24 polegadas", estoque: 40 }));
-console.log(atualizarProduto(3, { nome: "   " }));
-console.log(buscarProdutoPorId(3));
-
-console.log("\n--- Atualização parcialmente inválida ---");
 console.log(atualizarProduto(4, { preco: 999, nome: "" }));
-console.log(buscarProdutoPorId(4));
+console.log("Caderno continua intacto (sem atualização parcial):", buscarProdutoPorId(4));
 
+// ---------------------------------------------------------------
+titulo("3. CLIENTES");
 console.table(listarClientes());
-console.log(buscarClientePorId(3));
-console.log(buscarClientePorId(99));
-
+console.log("Busca por id 2:", buscarClientePorId(2));
 console.log(cadastrarCliente({ id: 4, nome: "Deivin", email: "deivin@gmail.com" }));
-console.log(cadastrarCliente({ id: 5, nome: "", email: "testevazio@gmail.com" }));
-console.log(cadastrarCliente({ id: 6, nome: "Dev", email: "" }));
-console.log(cadastrarCliente({ id: 1, nome: "Alho", email: "alho29@gmail.com" }));
-console.log(cadastrarCliente({ id: 7, nome: "Atchim", email: "ANA1313@GMAIL.COM" }));
+console.log(cadastrarCliente({ id: 5, nome: "", email: "vazio@gmail.com" }));
+console.log(cadastrarCliente({ id: 5, nome: "Marta", email: "" }));
+console.log(cadastrarCliente({ id: 1, nome: "Marta", email: "marta@gmail.com" }));
+console.log(cadastrarCliente({ id: 5, nome: "Marta", email: "ANA1313@GMAIL.COM" }));
 
-console.log("\n=== CARRINHO DE COMPRAS ===");
-
-console.log("\n--- Adição válida ---");
+// ---------------------------------------------------------------
+titulo("4. CARRINHO: ADIÇÃO, ALTERAÇÃO E CÁLCULOS");
 console.log(adicionarAoCarrinho(3, 2));
 console.log(adicionarAoCarrinho(4, 5));
-console.table(listarCarrinho());
-
-console.log("\n--- Adicionar o mesmo produto de novo ---");
-console.log(adicionarAoCarrinho(3, 1));
-console.table(listarCarrinho());
-
-console.log("\n--- Adição inválida: quantidade zero ou negativa ---");
-console.log(adicionarAoCarrinho(3, 0));
-console.log(adicionarAoCarrinho(3, -1));
-
-console.log("\n--- Adição inválida: produto inexistente ---");
-console.log(adicionarAoCarrinho(99, 1));
-
-console.log("\n--- Adição inválida: quantidade acima do estoque ---");
-console.log(adicionarAoCarrinho(3, 1000));
-
-console.log("\n--- Carrinho final (os inválidos não devem aparecer) ---");
-console.table(listarCarrinho());
-
-console.log("\n--- Somando acima do estoque ---");
-console.log(adicionarAoCarrinho(3, 38));
-console.table(listarCarrinho());
-
-console.log("\n--- Remover do carrinho ---");
-console.log(removerDoCarrinho(4));
-console.log(removerDoCarrinho(99));
-console.table(listarCarrinho());
-
-console.log("\n--- Alterar quantidade ---");
-console.log(alterarQuantidade(3, 5));
-console.log(alterarQuantidade(3, 0));
-console.log(alterarQuantidade(99, 2));
-console.log(alterarQuantidade(3, 1000));
-console.table(listarCarrinho());
-
-console.log("\n--- Subtotal ---");
-console.log(calcularSubtotal(carrinho[0]));
-
-console.log("\n--- Total do carrinho ---");
-console.log(adicionarAoCarrinho(4, 2));
-console.log(`Total: R$ ${calcularTotal()}`);
-
-console.log("\n--- Itens do carrinho com subtotal ---");
-console.log(adicionarAoCarrinho(4, 2));
+console.log(adicionarAoCarrinho(3, 1));        // mesmo produto: atualiza a linha, não duplica
+console.log(alterarQuantidade(4, 2));
+console.log(adicionarAoCarrinho(7, 10));
+console.log(removerDoCarrinho(7));
 console.table(listarItensDetalhados());
-console.log(`Total do carrinho: R$ ${calcularTotal().toFixed(2)}`);
+console.log(`Total do carrinho: R$ ${calcularTotal().toFixed(2)}`);   // 3 x 250 + 2 x 20 = 790
 
-console.log("\n=== PEDIDOS ===");
+titulo("5. CARRINHO: SITUAÇÕES INVÁLIDAS");
+console.log(adicionarAoCarrinho(3, 0));
+console.log(adicionarAoCarrinho(99, 1));
+console.log(adicionarAoCarrinho(3, 100));
+console.log(alterarQuantidade(99, 1));
+console.log(removerDoCarrinho(99));
 
-console.log("\n--- Estoque antes da compra ---");
-console.log(buscarProdutoPorId(3));
-console.log(buscarProdutoPorId(4));
-
-console.log("\n--- Finalização válida (cliente 1) ---");
+// ---------------------------------------------------------------
+titulo("6. FINALIZAÇÃO DE PEDIDO E ATUALIZAÇÃO DE ESTOQUE");
+console.log("Estoque antes  -> monitor:", buscarProdutoPorId(3)?.estoque, "| caderno:", buscarProdutoPorId(4)?.estoque);
 console.log(finalizarPedido(1));
+console.log("Estoque depois -> monitor:", buscarProdutoPorId(3)?.estoque, "| caderno:", buscarProdutoPorId(4)?.estoque);
 console.log("Carrinho após o pedido:", listarCarrinho());
 
-console.log("\n--- Estoque depois da compra ---");
-console.log(buscarProdutoPorId(3));
-console.log(buscarProdutoPorId(4));
+titulo("7. PEDIDOS: SITUAÇÕES INVÁLIDAS");
+console.log(finalizarPedido(1));               // carrinho vazio
 
-console.log("\n--- Inválido: carrinho vazio ---");
-console.log(finalizarPedido(1));
-
-console.log("\n--- Inválido: cliente inexistente ---");
-console.log(adicionarAoCarrinho(5, 1));
-console.log(finalizarPedido(99));
-
-console.log("\n--- Inválido: estoque insuficiente (nada pode ser descontado) ---");
 console.log(adicionarAoCarrinho(6, 10));
-console.log(atualizarProduto(6, { estoque: 2 }));
+console.log(adicionarAoCarrinho(5, 1));
+console.log(atualizarProduto(6, { estoque: 2 }));   // o estoque cai depois de o item entrar no carrinho
 console.log(finalizarPedido(2));
-console.log("Estoque do produto 5 (não pode ter mudado):", buscarProdutoPorId(5)?.estoque);
+console.log("Agenda não foi descontada (sem registro parcial):", buscarProdutoPorId(5)?.estoque);
 limparCarrinho();
 
-console.log("\n--- Preço histórico ---");
+console.log(adicionarAoCarrinho(1, 3));
+console.log(finalizarPedido(99));              // cliente inexistente
+
+// ---------------------------------------------------------------
+titulo("8. SEGUNDO PEDIDO E PREÇO HISTÓRICO");
+console.log(adicionarAoCarrinho(7, 10));
+console.log(finalizarPedido(2));
 console.log(atualizarProduto(3, { preco: 999 }));
-console.log("Preço no pedido 1:", listarPedidos()[0]?.itens[0]?.precoUnitario);
+console.log("Preço do monitor no pedido 1 (continua 250):", listarPedidos()[0]?.itens[0]?.precoUnitario);
 
-console.log("\n--- Todos os pedidos ---");
+titulo("9. CONSULTA DE PEDIDOS");
 console.log(JSON.stringify(listarPedidos(), null, 2));
+console.log("Pedidos do cliente 1:", listarPedidosDoCliente(1).length);
+console.log("Pedidos do cliente 3:", listarPedidosDoCliente(3).length);
 
-console.log("\n--- Pedidos do cliente 1 ---");
-console.log(listarPedidosDoCliente(1).length);
+// ---------------------------------------------------------------
+titulo("10. RELATÓRIOS");
+exibirRelatorios();

@@ -32,3 +32,10 @@ export type Pedido = {
     total: number;
     data: Date;
 }
+
+export type ProdutoVendido = {
+    produtoId: number;
+    nomeProduto: string;
+    quantidade: number;
+    receita: number;
+}
