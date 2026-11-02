@@ -1,4 +1,5 @@
-import { adicionarAoCarrinho, listarCarrinho, removerDoCarrinho, alterarQuantidade, carrinho, calcularSubtotal, calcularTotal, listarItensDetalhados} from "./carrinho";
+import { adicionarAoCarrinho, listarCarrinho, removerDoCarrinho, alterarQuantidade, carrinho, calcularSubtotal, calcularTotal, listarItensDetalhados, limparCarrinho} from "./carrinho";
+import { finalizarPedido, listarPedidos, listarPedidosDoCliente } from "./pedidos";
 import { buscarClientePorId, cadastrarCliente, listarClientes } from "./clientes";
 import {
     produtos,
@@ -130,3 +131,41 @@ console.log("\n--- Itens do carrinho com subtotal ---");
 console.log(adicionarAoCarrinho(4, 2));
 console.table(listarItensDetalhados());
 console.log(`Total do carrinho: R$ ${calcularTotal().toFixed(2)}`);
+
+console.log("\n=== PEDIDOS ===");
+
+console.log("\n--- Estoque antes da compra ---");
+console.log(buscarProdutoPorId(3));
+console.log(buscarProdutoPorId(4));
+
+console.log("\n--- Finalização válida (cliente 1) ---");
+console.log(finalizarPedido(1));
+console.log("Carrinho após o pedido:", listarCarrinho());
+
+console.log("\n--- Estoque depois da compra ---");
+console.log(buscarProdutoPorId(3));
+console.log(buscarProdutoPorId(4));
+
+console.log("\n--- Inválido: carrinho vazio ---");
+console.log(finalizarPedido(1));
+
+console.log("\n--- Inválido: cliente inexistente ---");
+console.log(adicionarAoCarrinho(5, 1));
+console.log(finalizarPedido(99));
+
+console.log("\n--- Inválido: estoque insuficiente (nada pode ser descontado) ---");
+console.log(adicionarAoCarrinho(6, 10));
+console.log(atualizarProduto(6, { estoque: 2 }));
+console.log(finalizarPedido(2));
+console.log("Estoque do produto 5 (não pode ter mudado):", buscarProdutoPorId(5)?.estoque);
+limparCarrinho();
+
+console.log("\n--- Preço histórico ---");
+console.log(atualizarProduto(3, { preco: 999 }));
+console.log("Preço no pedido 1:", listarPedidos()[0]?.itens[0]?.precoUnitario);
+
+console.log("\n--- Todos os pedidos ---");
+console.log(JSON.stringify(listarPedidos(), null, 2));
+
+console.log("\n--- Pedidos do cliente 1 ---");
+console.log(listarPedidosDoCliente(1).length);
